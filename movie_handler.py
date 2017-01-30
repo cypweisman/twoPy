@@ -3,6 +3,9 @@ import json
 
 class MovieHandler( xml.sax.ContentHandler ):
 
+  global gdic
+  gdic = list()
+
   def __init__(self):
     self.isInCommonElement = ""
     self.title = ""
@@ -29,11 +32,9 @@ class MovieHandler( xml.sax.ContentHandler ):
     elif self.isInCommonElement == "description":
       self.dic['description'] = self.description
       print self.description
-    with open('data.json', 'a') as outfile:
-      # for k, v in self.dic.items():
-         json.dump(self.dic, outfile)
-      #   outfile.write('\n')
-
+    if (self.description != "\n") and (len(self.dic) == 3):
+      with open('JFiles/movies.json', 'a') as outfile:
+           json.dump(self.dic, outfile, indent=2)
 
   def characters( self, content ):
     if self.isInCommonElement == "type":
@@ -41,21 +42,22 @@ class MovieHandler( xml.sax.ContentHandler ):
     elif self.isInCommonElement == "description":
       self.description = content
 
+ # @classmethod
+  # def addToG(self):
+  #   if (self.description != null) and (self.description != "\n"):
+  #     gdic.append(self.dic)
+
 
 #factory method to create a parser
-  # create an XMLReader
 parser = xml.sax.make_parser()
 
 #put content handler in the parser
 parser.setContentHandler( MovieHandler() )
 
 #finally call the parse method of the xml interface, passing file name
-parser.parse("movies.xml")
+parser.parse("XFiles/movies.xml")
 
-  # make into normal python object using normal
-  # data structures, most likely strings
-  # https://www.tutorialspoint.com/python/python_xml_processing.htm
 
-  # then pass the python object into an json parser
+
 
 
