@@ -3,9 +3,6 @@ import json
 
 class MovieHandler( xml.sax.ContentHandler ):
 
-  global gdic
-  gdic = list()
-
   def __init__(self):
     self.isInCommonElement = ""
     self.title = ""
@@ -48,14 +45,7 @@ class MovieHandler( xml.sax.ContentHandler ):
   #     gdic.append(self.dic)
 
 
-#factory method to create a parser
-parser = xml.sax.make_parser()
 
-#put content handler in the parser
-parser.setContentHandler( MovieHandler() )
-
-#finally call the parse method of the xml interface, passing file name
-parser.parse("XFiles/movies.xml")
 
 
 
