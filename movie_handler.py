@@ -1,4 +1,5 @@
 import xml.sax
+import json
 
 class MovieHandler( xml.sax.ContentHandler ):
 
@@ -7,18 +8,32 @@ class MovieHandler( xml.sax.ContentHandler ):
     self.title = ""
     self.description = ""
     self.type = ""
+    self.dic = dict()
+
+  # def asdict(self, *keys):
+  #   if not keys:
+  #       keys = ['self.title', 'self.description', 'self.type']
+  #   return dict((key, getattr(self, key)) for key in keys)
 
   def startElement( self, tag, attributes ):
     self.isInCommonElement = tag
     if tag == "movie":
       self.title = attributes["title"]
+      self.dic['title'] = self.title
       print self.title
 
   def endElement( self, tag ):
     if self.isInCommonElement == "type":
+      self.dic['type'] = self.type
       print self.type
     elif self.isInCommonElement == "description":
+      self.dic['description'] = self.description
       print self.description
+    with open('data.json', 'a') as outfile:
+      # for k, v in self.dic.items():
+         json.dump(self.dic, outfile)
+      #   outfile.write('\n')
+
 
   def characters( self, content ):
     if self.isInCommonElement == "type":
