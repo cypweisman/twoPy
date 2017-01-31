@@ -10,11 +10,6 @@ class MovieHandler( xml.sax.ContentHandler ):
     self.type = ""
     self.dic = dict()
 
-  # def asdict(self, *keys):
-  #   if not keys:
-  #       keys = ['self.title', 'self.description', 'self.type']
-  #   return dict((key, getattr(self, key)) for key in keys)
-
   def startElement( self, tag, attributes ):
     self.isInCommonElement = tag
     if tag == "movie":
@@ -38,11 +33,6 @@ class MovieHandler( xml.sax.ContentHandler ):
       self.type = content
     elif self.isInCommonElement == "description":
       self.description = content
-
- # @classmethod
-  # def addToG(self):
-  #   if (self.description != null) and (self.description != "\n"):
-  #     gdic.append(self.dic)
 
 
 
